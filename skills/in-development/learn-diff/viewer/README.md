@@ -355,5 +355,7 @@ DELETE /api/runs/<id>/comments/<kind>/<id>
 
 - ใช้ shadcn/ui แบบ copy-in — เพิ่ม component ด้วย `pnpm dlx shadcn@latest add <name>`
   (ค่า config อยู่ใน `components.json`, design token อยู่ใน `src/index.css`)
-- `pnpm-workspace.yaml` มีไว้เพื่อ `onlyBuiltDependencies: [esbuild]` — pnpm 10+ บล็อก
-  postinstall script โดย default ถ้าไม่ประกาศไว้ vite จะพังตอนรัน
+- `pnpm-workspace.yaml` มีไว้เพื่ออนุญาตให้ esbuild รัน postinstall — pnpm 10+ บล็อก
+  postinstall script โดย default ถ้าไม่ประกาศไว้ vite จะพังตอนรัน ·
+  ประกาศไว้ 2 คีย์เพราะทีมใช้ pnpm คนละรุ่น: `allowBuilds` (pnpm 11) กับ
+  `onlyBuiltDependencies` (pnpm 10) — เพิ่ม dependency ที่ต้อง build ต้องใส่ทั้งสองที่

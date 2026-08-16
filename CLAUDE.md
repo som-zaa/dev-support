@@ -53,9 +53,12 @@ skill ที่ต้องมี runtime ของตัวเอง (ตอน
   ไม่ใช่ลงแบบครึ่ง ๆ กลาง ๆ
 - **รันจาก source เท่านั้น** ไม่ commit build artifact (`node_modules/` กับ `dist/` อยู่ใน
   `.gitignore` ของ root) — คนแก้ app แล้วเห็นผลทันที ไม่มีขั้นตอน build/release
-- ถ้าเพิ่ม dependency ที่ต้อง build ตอน install (native/postinstall) ต้องเพิ่มชื่อมันใน
-  `onlyBuiltDependencies` ของ `pnpm-workspace.yaml` ในโฟลเดอร์ app ด้วย — pnpm 10+ บล็อก
-  postinstall script เป็นค่าเริ่มต้น
+- ถ้าเพิ่ม dependency ที่ต้อง build ตอน install (native/postinstall) ต้องประกาศชื่อมันใน
+  `pnpm-workspace.yaml` ของโฟลเดอร์ app ด้วย — pnpm 10+ บล็อก postinstall script เป็นค่าเริ่มต้น ·
+  **ต้องใส่ทั้ง 2 คีย์** เพราะทีมใช้ pnpm คนละรุ่น: `allowBuilds: {<name>: true}` (pnpm 11)
+  และ `onlyBuiltDependencies: [<name>]` (pnpm 10) — คีย์ที่ pnpm รุ่นนั้นไม่รู้จักจะถูกข้ามไปเฉย ๆ ·
+  ถ้าใส่ไม่ครบ pnpm 11 จะเขียน placeholder `<name>: set this to true or false` ลงไฟล์เอง
+  แล้ว exit 1 (`ERR_PNPM_IGNORED_BUILDS`) ทำให้ตัวติดตั้งรายงาน WARN
 
 ## Agent skills
 
