@@ -3226,8 +3226,8 @@ var require_utils = __commonJS({
       }
       return ind;
     }
-    function removeDotSegments(path) {
-      let input = path;
+    function removeDotSegments(path2) {
+      let input = path2;
       const output = [];
       let nextSlash = -1;
       let len = 0;
@@ -3479,8 +3479,8 @@ var require_schemes = __commonJS({
         wsComponent.secure = void 0;
       }
       if (wsComponent.resourceName) {
-        const [path, query] = wsComponent.resourceName.split("?");
-        wsComponent.path = path && path !== "/" ? path : void 0;
+        const [path2, query] = wsComponent.resourceName.split("?");
+        wsComponent.path = path2 && path2 !== "/" ? path2 : void 0;
         wsComponent.query = query;
         wsComponent.resourceName = void 0;
       }
@@ -6887,8 +6887,8 @@ var require_dist = __commonJS({
 });
 
 // src/stdio.ts
-import { readFile, stat } from "node:fs/promises";
-import { basename, isAbsolute, resolve } from "node:path";
+import { readFile, realpath, stat } from "node:fs/promises";
+import path, { basename, isAbsolute, resolve } from "node:path";
 
 // ../../node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/external.js
 var external_exports = {};
@@ -7368,8 +7368,8 @@ function getErrorMap() {
 
 // ../../node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/helpers/parseUtil.js
 var makeIssue = (params) => {
-  const { data, path, errorMaps, issueData } = params;
-  const fullPath = [...path, ...issueData.path || []];
+  const { data, path: path2, errorMaps, issueData } = params;
+  const fullPath = [...path2, ...issueData.path || []];
   const fullIssue = {
     ...issueData,
     path: fullPath
@@ -7485,11 +7485,11 @@ var errorUtil;
 
 // ../../node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js
 var ParseInputLazyPath = class {
-  constructor(parent, value, path, key) {
+  constructor(parent, value, path2, key) {
     this._cachedPath = [];
     this.parent = parent;
     this.data = value;
-    this._path = path;
+    this._path = path2;
     this._key = key;
   }
   get path() {
@@ -11127,10 +11127,10 @@ function assignProp(target, prop, value) {
     configurable: true
   });
 }
-function getElementAtPath(obj, path) {
-  if (!path)
+function getElementAtPath(obj, path2) {
+  if (!path2)
     return obj;
-  return path.reduce((acc, key) => acc?.[key], obj);
+  return path2.reduce((acc, key) => acc?.[key], obj);
 }
 function promiseAllObject(promisesObj) {
   const keys = Object.keys(promisesObj);
@@ -11450,11 +11450,11 @@ function aborted(x, startIndex = 0) {
   }
   return false;
 }
-function prefixIssues(path, issues) {
+function prefixIssues(path2, issues) {
   return issues.map((iss) => {
     var _a;
     (_a = iss).path ?? (_a.path = []);
-    iss.path.unshift(path);
+    iss.path.unshift(path2);
     return iss;
   });
 }
@@ -21141,13 +21141,13 @@ function loadConfig(env) {
   if (token === void 0 || token === "") {
     return {
       ok: false,
-      message: "\u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E15\u0E31\u0E49\u0E07 ARTEMIS_API_TOKEN \u2014 \u0E2A\u0E23\u0E49\u0E32\u0E07 token \u0E44\u0E14\u0E49\u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32 Admin \u2192 API Tokens \u0E02\u0E2D\u0E07 Artemis \u0E41\u0E25\u0E49\u0E27\u0E43\u0E2A\u0E48\u0E43\u0E19\u0E0A\u0E48\u0E2D\u0E07 env \u0E02\u0E2D\u0E07 .mcp.local.json (\u0E04\u0E48\u0E32\u0E08\u0E30\u0E41\u0E2A\u0E14\u0E07\u0E04\u0E23\u0E31\u0E49\u0E07\u0E40\u0E14\u0E35\u0E22\u0E27\u0E15\u0E2D\u0E19\u0E2A\u0E23\u0E49\u0E32\u0E07)"
+      message: "\u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E15\u0E31\u0E49\u0E07 ARTEMIS_API_TOKEN \u2014 \u0E2A\u0E23\u0E49\u0E32\u0E07 token \u0E44\u0E14\u0E49\u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32 /settings/api-tokens (\u0E40\u0E21\u0E19\u0E39\u0E1A\u0E31\u0E0D\u0E0A\u0E35 \u2192 API Tokens \u0E02\u0E2D\u0E07\u0E09\u0E31\u0E19) \u0E02\u0E2D\u0E07 Artemis \u0E41\u0E25\u0E49\u0E27\u0E43\u0E2A\u0E48\u0E43\u0E19\u0E0A\u0E48\u0E2D\u0E07 env \u0E02\u0E2D\u0E07 .mcp.local.json (\u0E04\u0E48\u0E32\u0E08\u0E30\u0E41\u0E2A\u0E14\u0E07\u0E04\u0E23\u0E31\u0E49\u0E07\u0E40\u0E14\u0E35\u0E22\u0E27\u0E15\u0E2D\u0E19\u0E2A\u0E23\u0E49\u0E32\u0E07)"
     };
   }
   if (!TOKEN_PATTERN.test(token)) {
     return {
       ok: false,
-      message: "\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A ARTEMIS_API_TOKEN \u0E44\u0E21\u0E48\u0E16\u0E39\u0E01\u0E15\u0E49\u0E2D\u0E07 \u2014 \u0E15\u0E49\u0E2D\u0E07\u0E02\u0E36\u0E49\u0E19\u0E15\u0E49\u0E19\u0E14\u0E49\u0E27\u0E22 art_ \u0E15\u0E32\u0E21\u0E14\u0E49\u0E27\u0E22\u0E40\u0E25\u0E02\u0E10\u0E32\u0E19\u0E2A\u0E34\u0E1A\u0E2B\u0E01 64 \u0E15\u0E31\u0E27 (\u0E04\u0E48\u0E32\u0E17\u0E35\u0E48\u0E15\u0E31\u0E49\u0E07\u0E44\u0E27\u0E49\u0E44\u0E21\u0E48\u0E15\u0E23\u0E07\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A\u0E19\u0E35\u0E49) \u0E2A\u0E23\u0E49\u0E32\u0E07\u0E43\u0E2B\u0E21\u0E48\u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32 Admin \u2192 API Tokens"
+      message: "\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A ARTEMIS_API_TOKEN \u0E44\u0E21\u0E48\u0E16\u0E39\u0E01\u0E15\u0E49\u0E2D\u0E07 \u2014 \u0E15\u0E49\u0E2D\u0E07\u0E02\u0E36\u0E49\u0E19\u0E15\u0E49\u0E19\u0E14\u0E49\u0E27\u0E22 art_ \u0E15\u0E32\u0E21\u0E14\u0E49\u0E27\u0E22\u0E40\u0E25\u0E02\u0E10\u0E32\u0E19\u0E2A\u0E34\u0E1A\u0E2B\u0E01 64 \u0E15\u0E31\u0E27 (\u0E04\u0E48\u0E32\u0E17\u0E35\u0E48\u0E15\u0E31\u0E49\u0E07\u0E44\u0E27\u0E49\u0E44\u0E21\u0E48\u0E15\u0E23\u0E07\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A\u0E19\u0E35\u0E49) \u0E2A\u0E23\u0E49\u0E32\u0E07\u0E43\u0E2B\u0E21\u0E48\u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32 /settings/api-tokens (\u0E40\u0E21\u0E19\u0E39\u0E1A\u0E31\u0E0D\u0E0A\u0E35 \u2192 API Tokens \u0E02\u0E2D\u0E07\u0E09\u0E31\u0E19)"
     };
   }
   const logLevelRaw = env.ARTEMIS_LOG_LEVEL?.trim();
@@ -21210,8 +21210,8 @@ async function toApiError(res) {
 }
 function createClient(cfg, fetchImpl) {
   const doFetch = fetchImpl ?? ((input, init) => globalThis.fetch(input, init));
-  async function request(method, path, query, body, isRetry = false) {
-    const url = `${cfg.apiUrl}${path}${buildQuery(query)}`;
+  async function request(method, path2, query, body, isRetry = false) {
+    const url = `${cfg.apiUrl}${path2}${buildQuery(query)}`;
     let res;
     try {
       res = await doFetch(url, {
@@ -21243,7 +21243,7 @@ function createClient(cfg, fetchImpl) {
       const wait = err.retryAfterSec ?? 0;
       if (wait > 0 && wait <= MAX_RETRY_WAIT_SEC) {
         await new Promise((r) => setTimeout(r, wait * 1e3));
-        return request(method, path, query, body, true);
+        return request(method, path2, query, body, true);
       }
       return { ok: false, err };
     }
@@ -21257,10 +21257,11 @@ function createClient(cfg, fetchImpl) {
     }
   }
   return {
-    get: (path, query) => request("GET", path, query),
-    post: (path, body) => request("POST", path, void 0, body ?? {}),
-    patch: (path, body) => request("PATCH", path, void 0, body),
-    del: (path) => request("DELETE", path)
+    get: (path2, query) => request("GET", path2, query),
+    post: (path2, body) => request("POST", path2, void 0, body ?? {}),
+    put: (path2, body) => request("PUT", path2, void 0, body),
+    patch: (path2, body) => request("PATCH", path2, void 0, body),
+    del: (path2) => request("DELETE", path2)
   };
 }
 async function postBytes(uploadUrl, bytes, mimeType, timeoutMs, fetchImpl) {
@@ -21321,6 +21322,16 @@ async function getBytes(url, maxBytes, timeoutMs, fetchImpl) {
   }
 }
 
+// src/fsGuard.ts
+function makeIsInside(p) {
+  return (root, candidate) => {
+    const rel = p.relative(root, candidate);
+    if (rel === "") return true;
+    if (p.isAbsolute(rel)) return false;
+    return rel !== ".." && !rel.startsWith(`..${p.sep}`);
+  };
+}
+
 // src/errors.ts
 function redactToken(text2) {
   return text2.replace(/art_[0-9a-f]{8,}/g, "art_***");
@@ -21329,18 +21340,18 @@ function describeError(err, hint) {
   const suffix = hint === void 0 ? "" : ` (${hint})`;
   switch (err.code) {
     case "UNAUTHORIZED":
-      return `token \u0E43\u0E0A\u0E49\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E2B\u0E23\u0E37\u0E2D\u0E16\u0E39\u0E01\u0E40\u0E1E\u0E34\u0E01\u0E16\u0E2D\u0E19\u0E41\u0E25\u0E49\u0E27${suffix} \u2014 \u0E15\u0E23\u0E27\u0E08\u0E04\u0E48\u0E32 ARTEMIS_API_TOKEN \u0E43\u0E19 .mcp.local.json \u0E41\u0E25\u0E49\u0E27 restart MCP server \xB7 \u0E16\u0E49\u0E32\u0E40\u0E1E\u0E34\u0E48\u0E07\u0E16\u0E39\u0E01\u0E40\u0E1E\u0E34\u0E01\u0E16\u0E2D\u0E19 \u0E43\u0E2B\u0E49\u0E2A\u0E23\u0E49\u0E32\u0E07 token \u0E43\u0E2B\u0E21\u0E48 \u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32 Admin \u2192 API Tokens (\u0E1A\u0E31\u0E0D\u0E0A\u0E35\u0E40\u0E08\u0E49\u0E32\u0E02\u0E2D\u0E07 token \u0E17\u0E35\u0E48\u0E16\u0E39\u0E01\u0E1B\u0E34\u0E14\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E01\u0E47\u0E17\u0E33\u0E43\u0E2B\u0E49\u0E02\u0E36\u0E49\u0E19\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E19\u0E35\u0E49)`;
+      return `token \u0E43\u0E0A\u0E49\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E2B\u0E23\u0E37\u0E2D\u0E16\u0E39\u0E01\u0E40\u0E1E\u0E34\u0E01\u0E16\u0E2D\u0E19\u0E41\u0E25\u0E49\u0E27${suffix} \u2014 \u0E15\u0E23\u0E27\u0E08\u0E04\u0E48\u0E32 ARTEMIS_API_TOKEN \u0E43\u0E19 .mcp.local.json \u0E41\u0E25\u0E49\u0E27 restart MCP server \xB7 \u0E16\u0E49\u0E32\u0E40\u0E1E\u0E34\u0E48\u0E07\u0E16\u0E39\u0E01\u0E40\u0E1E\u0E34\u0E01\u0E16\u0E2D\u0E19 \u0E43\u0E2B\u0E49\u0E2A\u0E23\u0E49\u0E32\u0E07 token \u0E43\u0E2B\u0E21\u0E48 \u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32 /settings/api-tokens (\u0E40\u0E21\u0E19\u0E39\u0E1A\u0E31\u0E0D\u0E0A\u0E35 \u2192 API Tokens \u0E02\u0E2D\u0E07\u0E09\u0E31\u0E19) \u2014 \u0E1A\u0E31\u0E0D\u0E0A\u0E35\u0E40\u0E08\u0E49\u0E32\u0E02\u0E2D\u0E07 token \u0E17\u0E35\u0E48\u0E16\u0E39\u0E01\u0E1B\u0E34\u0E14\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E01\u0E47\u0E17\u0E33\u0E43\u0E2B\u0E49\u0E02\u0E36\u0E49\u0E19\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E19\u0E35\u0E49`;
     case "FORBIDDEN": {
       const scope = /token lacks scope ([\w:]+)/.exec(err.message);
       if (scope !== null) {
-        return `token \u0E43\u0E1A\u0E19\u0E35\u0E49\u0E44\u0E21\u0E48\u0E21\u0E35 scope \`${scope[1]}\`${suffix} \u2014 scope \u0E02\u0E2D\u0E07 token \u0E41\u0E01\u0E49\u0E17\u0E35\u0E2B\u0E25\u0E31\u0E07\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49 \u0E15\u0E49\u0E2D\u0E07\u0E2A\u0E23\u0E49\u0E32\u0E07 token \u0E43\u0E1A\u0E43\u0E2B\u0E21\u0E48\u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32 Admin \u2192 API Tokens \u0E42\u0E14\u0E22\u0E15\u0E34\u0E4A\u0E01 \`${scope[1]}\` \u0E41\u0E25\u0E49\u0E27\u0E19\u0E33\u0E44\u0E1B\u0E41\u0E17\u0E19\u0E04\u0E48\u0E32 ARTEMIS_API_TOKEN \u0E43\u0E19 .mcp.local.json`;
+        return `token \u0E43\u0E1A\u0E19\u0E35\u0E49\u0E44\u0E21\u0E48\u0E21\u0E35 scope \`${scope[1]}\`${suffix} \u2014 scope \u0E02\u0E2D\u0E07 token \u0E41\u0E01\u0E49\u0E17\u0E35\u0E2B\u0E25\u0E31\u0E07\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49 \u0E15\u0E49\u0E2D\u0E07\u0E2A\u0E23\u0E49\u0E32\u0E07 token \u0E43\u0E1A\u0E43\u0E2B\u0E21\u0E48\u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32 /settings/api-tokens (\u0E40\u0E21\u0E19\u0E39\u0E1A\u0E31\u0E0D\u0E0A\u0E35 \u2192 API Tokens \u0E02\u0E2D\u0E07\u0E09\u0E31\u0E19) \u0E42\u0E14\u0E22\u0E15\u0E34\u0E4A\u0E01 \`${scope[1]}\` \u0E41\u0E25\u0E49\u0E27\u0E19\u0E33\u0E44\u0E1B\u0E41\u0E17\u0E19\u0E04\u0E48\u0E32 ARTEMIS_API_TOKEN \u0E43\u0E19 .mcp.local.json`;
       }
       return `\u0E44\u0E21\u0E48\u0E21\u0E35\u0E2A\u0E34\u0E17\u0E18\u0E34\u0E4C\u0E40\u0E02\u0E49\u0E32\u0E16\u0E36\u0E07${suffix} \u2014 \u0E1A\u0E31\u0E0D\u0E0A\u0E35\u0E40\u0E08\u0E49\u0E32\u0E02\u0E2D\u0E07 token \u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E40\u0E1B\u0E47\u0E19\u0E2A\u0E21\u0E32\u0E0A\u0E34\u0E01\u0E02\u0E2D\u0E07\u0E42\u0E1B\u0E23\u0E40\u0E08\u0E01\u0E15\u0E4C\u0E19\u0E35\u0E49 (\u0E2A\u0E34\u0E17\u0E18\u0E34\u0E4C\u0E08\u0E23\u0E34\u0E07 = \u0E2A\u0E34\u0E17\u0E18\u0E34\u0E4C\u0E02\u0E2D\u0E07\u0E1C\u0E39\u0E49\u0E2D\u0E2D\u0E01 token \u2229 scope \u0E02\u0E2D\u0E07 token) \xB7 \u0E40\u0E23\u0E35\u0E22\u0E01 list_projects \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E14\u0E39\u0E27\u0E48\u0E32\u0E40\u0E02\u0E49\u0E32\u0E16\u0E36\u0E07\u0E42\u0E1B\u0E23\u0E40\u0E08\u0E01\u0E15\u0E4C\u0E44\u0E2B\u0E19\u0E44\u0E14\u0E49\u0E1A\u0E49\u0E32\u0E07`;
     }
     case "NOT_FOUND":
       return `\u0E44\u0E21\u0E48\u0E1E\u0E1A\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E2D\u0E49\u0E32\u0E07\u0E16\u0E36\u0E07${suffix} \xB7 ${err.message} \u2014 \u0E15\u0E23\u0E27\u0E08\u0E15\u0E31\u0E27\u0E2A\u0E30\u0E01\u0E14\u0E02\u0E2D\u0E07\u0E23\u0E2B\u0E31\u0E2A \u0E41\u0E25\u0E49\u0E27\u0E43\u0E0A\u0E49 list_tickets / list_projects \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E14\u0E39\u0E04\u0E48\u0E32\u0E17\u0E35\u0E48\u0E21\u0E35\u0E2D\u0E22\u0E39\u0E48\u0E08\u0E23\u0E34\u0E07`;
     case "RATE_LIMITED":
-      return `\u0E40\u0E23\u0E35\u0E22\u0E01 API \u0E16\u0E35\u0E48\u0E40\u0E01\u0E34\u0E19\u0E40\u0E1E\u0E14\u0E32\u0E19\u0E02\u0E2D\u0E07 token \u0E19\u0E35\u0E49${suffix} \u2014 \u0E23\u0E2D\u0E2D\u0E35\u0E01 ${err.retryAfterSec ?? 30} \u0E27\u0E34\u0E19\u0E32\u0E17\u0E35\u0E41\u0E25\u0E49\u0E27\u0E25\u0E2D\u0E07\u0E43\u0E2B\u0E21\u0E48 (\u0E1C\u0E39\u0E49\u0E14\u0E39\u0E41\u0E25\u0E1B\u0E23\u0E31\u0E1A\u0E40\u0E1E\u0E14\u0E32\u0E19\u0E23\u0E32\u0E22\u0E43\u0E1A\u0E44\u0E14\u0E49\u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32 Admin \u2192 API Tokens)`;
+      return `\u0E40\u0E23\u0E35\u0E22\u0E01 API \u0E16\u0E35\u0E48\u0E40\u0E01\u0E34\u0E19\u0E40\u0E1E\u0E14\u0E32\u0E19\u0E02\u0E2D\u0E07 token \u0E19\u0E35\u0E49${suffix} \u2014 \u0E23\u0E2D\u0E2D\u0E35\u0E01 ${err.retryAfterSec ?? 30} \u0E27\u0E34\u0E19\u0E32\u0E17\u0E35\u0E41\u0E25\u0E49\u0E27\u0E25\u0E2D\u0E07\u0E43\u0E2B\u0E21\u0E48 (\u0E1C\u0E39\u0E49\u0E14\u0E39\u0E41\u0E25\u0E23\u0E30\u0E1A\u0E1A\u0E1B\u0E23\u0E31\u0E1A\u0E40\u0E1E\u0E14\u0E32\u0E19\u0E23\u0E32\u0E22\u0E43\u0E1A\u0E44\u0E14\u0E49\u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32 Admin \u2192 API Tokens)`;
     case "CONFLICT":
       return `\u0E04\u0E33\u0E02\u0E2D\u0E16\u0E39\u0E01\u0E15\u0E49\u0E2D\u0E07\u0E41\u0E15\u0E48\u0E2A\u0E16\u0E32\u0E19\u0E30\u0E1B\u0E31\u0E08\u0E08\u0E38\u0E1A\u0E31\u0E19\u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E1E\u0E23\u0E49\u0E2D\u0E21${suffix} \xB7 ${err.message} \u2014 \u0E41\u0E01\u0E49\u0E2A\u0E16\u0E32\u0E19\u0E30\u0E17\u0E35\u0E48\u0E02\u0E31\u0E14\u0E2D\u0E22\u0E39\u0E48\u0E41\u0E25\u0E49\u0E27\u0E25\u0E2D\u0E07\u0E43\u0E2B\u0E21\u0E48\u0E44\u0E14\u0E49 (\u0E15\u0E48\u0E32\u0E07\u0E08\u0E32\u0E01 400 \u0E17\u0E35\u0E48\u0E25\u0E2D\u0E07\u0E43\u0E2B\u0E21\u0E48\u0E01\u0E35\u0E48\u0E04\u0E23\u0E31\u0E49\u0E07\u0E01\u0E47\u0E44\u0E21\u0E48\u0E1C\u0E48\u0E32\u0E19)`;
     case "NETWORK":
@@ -21659,6 +21670,14 @@ function withUrl(cfg, key, line) {
   const u = ticketUrl(cfg, key);
   return u === void 0 ? line : `${line} \xB7 ${u}`;
 }
+var COMMENT_PREVIEW_MAX = 1200;
+function commentLine(c, key) {
+  const head = `- [${c.author ?? "\u0E1A\u0E31\u0E0D\u0E0A\u0E35\u0E16\u0E39\u0E01\u0E25\u0E1A"}] `;
+  const edited = c.editedAt === null ? "" : " (\u0E41\u0E01\u0E49\u0E44\u0E02\u0E41\u0E25\u0E49\u0E27)";
+  if (c.body.length <= COMMENT_PREVIEW_MAX) return `${head}${c.body}${edited}`;
+  return `${head}${c.body.slice(0, COMMENT_PREVIEW_MAX)}${edited}
+  \u2026 \u0E15\u0E31\u0E14\u0E21\u0E32\u0E41\u0E2A\u0E14\u0E07 ${COMMENT_PREVIEW_MAX} \u0E08\u0E32\u0E01 ${c.body.length} \u0E15\u0E31\u0E27\u0E2D\u0E31\u0E01\u0E29\u0E23 \u2014 \u0E2D\u0E48\u0E32\u0E19\u0E09\u0E1A\u0E31\u0E1A\u0E40\u0E15\u0E47\u0E21\u0E14\u0E49\u0E27\u0E22 list_comments key=${key}`;
+}
 function encodeLabel(name) {
   if (name.includes("/")) {
     return {
@@ -21679,8 +21698,10 @@ function looksSecret(absPath) {
     return true;
   }
   if (base === "credentials" || base === ".npmrc" || base === ".netrc") return true;
+  if (base === ".mcp.json" || base === ".mcp.local.json") return true;
   const lower = p.toLowerCase();
-  return /\/\.ssh\//.test(lower) || /\/\.aws\//.test(lower) || /\/\.gnupg\//.test(lower) || /\/\.config\/gcloud\//.test(lower) || /\/\.kube\//.test(lower);
+  return /\/\.ssh\//.test(lower) || /\/\.aws\//.test(lower) || /\/\.gnupg\//.test(lower) || /\/\.config\/gcloud\//.test(lower) || /\/\.kube\//.test(lower) || /\/\.codex\//.test(lower) || // ~/.codex/config.toml เก็บ env ของ MCP server (token) ทั้งก้อน
+  /\/\.git\//.test(lower);
 }
 function buildTools(ctx) {
   const { client, cfg } = ctx;
@@ -21874,9 +21895,7 @@ ${cols}`);
         lines.push(
           "",
           `\u0E04\u0E2D\u0E21\u0E40\u0E21\u0E19\u0E15\u0E4C (${t.comments.length}${t.commentsTruncated ? " \u0E25\u0E48\u0E32\u0E2A\u0E38\u0E14 \u2014 \u0E21\u0E35\u0E21\u0E32\u0E01\u0E01\u0E27\u0E48\u0E32\u0E19\u0E35\u0E49 \u0E43\u0E0A\u0E49 list_comments" : ""}):`,
-          ...t.comments.map(
-            (c) => `- [${c.author ?? "\u0E1A\u0E31\u0E0D\u0E0A\u0E35\u0E16\u0E39\u0E01\u0E25\u0E1A"}] ${c.body}${c.editedAt === null ? "" : " (\u0E41\u0E01\u0E49\u0E44\u0E02\u0E41\u0E25\u0E49\u0E27)"}`
-          )
+          ...t.comments.map((c) => commentLine(c, t.key))
         );
       }
       const blocks = [text(lines.join("\n"))];
@@ -21911,7 +21930,7 @@ ${describeAttachments(t.attachments)}`));
         title: external_exports.string().describe("\u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D\u0E07\u0E32\u0E19"),
         type: external_exports.enum(["bug", "feature", "task"]).describe("\u0E0A\u0E19\u0E34\u0E14\u0E07\u0E32\u0E19"),
         priority: external_exports.enum(["urgent", "high", "medium", "low"]).optional().describe("\u0E44\u0E21\u0E48\u0E23\u0E30\u0E1A\u0E38 = medium"),
-        description: external_exports.string().optional().describe("\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14\u0E41\u0E1A\u0E1A\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E25\u0E49\u0E27\u0E19"),
+        description: external_exports.string().optional().describe("\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14 \u2014 \u0E40\u0E02\u0E35\u0E22\u0E19 markdown \u0E44\u0E14\u0E49 (\u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D/\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23/\u0E15\u0E31\u0E27\u0E2B\u0E19\u0E32/\u0E42\u0E04\u0E49\u0E14/\u0E15\u0E32\u0E23\u0E32\u0E07) \u0E23\u0E30\u0E1A\u0E1A\u0E40\u0E23\u0E19\u0E40\u0E14\u0E2D\u0E23\u0E4C\u0E43\u0E2B\u0E49\u0E41\u0E2A\u0E14\u0E07\u0E43\u0E19\u0E2B\u0E19\u0E49\u0E32\u0E40\u0E27\u0E47\u0E1A\u0E40\u0E2D\u0E07"),
         assignees: external_exports.array(external_exports.string()).optional().describe("\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E02\u0E2D\u0E07\u0E2A\u0E21\u0E32\u0E0A\u0E34\u0E01\u0E42\u0E1B\u0E23\u0E40\u0E08\u0E01\u0E15\u0E4C"),
         parentKey: external_exports.string().optional().describe("\u0E23\u0E30\u0E1A\u0E38 = \u0E2A\u0E23\u0E49\u0E32\u0E07\u0E40\u0E1B\u0E47\u0E19\u0E07\u0E32\u0E19\u0E25\u0E39\u0E01\u0E02\u0E2D\u0E07\u0E43\u0E1A\u0E19\u0E31\u0E49\u0E19 (\u0E25\u0E36\u0E01\u0E44\u0E14\u0E49\u0E0A\u0E31\u0E49\u0E19\u0E40\u0E14\u0E35\u0E22\u0E27)")
       },
@@ -21947,7 +21966,7 @@ ${describeAttachments(t.attachments)}`));
         projectKey: PROJECT_KEY_ARG,
         title: external_exports.string().optional(),
         status: external_exports.string().optional().describe("\u0E0A\u0E37\u0E48\u0E2D\u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C\u0E1B\u0E25\u0E32\u0E22\u0E17\u0E32\u0E07"),
-        description: external_exports.string().optional(),
+        description: external_exports.string().optional().describe("\u0E40\u0E02\u0E35\u0E22\u0E19 markdown \u0E44\u0E14\u0E49 \xB7 \u0E2A\u0E48\u0E07\u0E21\u0E32 = \u0E41\u0E17\u0E19\u0E17\u0E35\u0E48\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14\u0E40\u0E14\u0E34\u0E21\u0E17\u0E31\u0E49\u0E07\u0E01\u0E49\u0E2D\u0E19 (\u0E17\u0E31\u0E49\u0E07\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E41\u0E25\u0E30\u0E17\u0E35\u0E48\u0E41\u0E2A\u0E14\u0E07\u0E43\u0E19\u0E2B\u0E19\u0E49\u0E32\u0E40\u0E27\u0E47\u0E1A)"),
         priority: external_exports.enum(["urgent", "high", "medium", "low"]).optional(),
         type: external_exports.enum(["bug", "feature", "task"]).optional(),
         assignees: external_exports.array(external_exports.string()).optional().describe("\u0E23\u0E32\u0E22\u0E0A\u0E37\u0E48\u0E2D\u0E2A\u0E38\u0E14\u0E17\u0E49\u0E32\u0E22\u0E17\u0E31\u0E49\u0E07\u0E0A\u0E38\u0E14"),
@@ -22124,7 +22143,7 @@ sprint \u0E17\u0E35\u0E48\u0E21\u0E35\u0E08\u0E23\u0E34\u0E07\u0E43\u0E19\u0E42\
     name: "list_comments",
     config: {
       title: "\u0E04\u0E2D\u0E21\u0E40\u0E21\u0E19\u0E15\u0E4C\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14\u0E02\u0E2D\u0E07\u0E07\u0E32\u0E19",
-      description: "\u0E40\u0E23\u0E35\u0E22\u0E07\u0E40\u0E01\u0E48\u0E32\u2192\u0E43\u0E2B\u0E21\u0E48 \xB7 get_ticket \u0E43\u0E2B\u0E49\u0E41\u0E04\u0E48 50 \u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E25\u0E48\u0E32\u0E2A\u0E38\u0E14 \u0E43\u0E0A\u0E49\u0E2D\u0E31\u0E19\u0E19\u0E35\u0E49\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E04\u0E23\u0E1A\u0E17\u0E38\u0E01\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23",
+      description: "\u0E40\u0E23\u0E35\u0E22\u0E07\u0E40\u0E01\u0E48\u0E32\u2192\u0E43\u0E2B\u0E21\u0E48 \xB7 get_ticket \u0E43\u0E2B\u0E49\u0E41\u0E04\u0E48 50 \u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E25\u0E48\u0E32\u0E2A\u0E38\u0E14 \u0E41\u0E25\u0E30\u0E22\u0E48\u0E2D\u0E04\u0E2D\u0E21\u0E40\u0E21\u0E19\u0E15\u0E4C\u0E17\u0E35\u0E48\u0E22\u0E32\u0E27\u0E21\u0E32\u0E01 \u0E43\u0E0A\u0E49\u0E2D\u0E31\u0E19\u0E19\u0E35\u0E49\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E04\u0E23\u0E1A\u0E17\u0E38\u0E01\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E2B\u0E23\u0E37\u0E2D\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E40\u0E15\u0E47\u0E21\u0E02\u0E2D\u0E07\u0E04\u0E2D\u0E21\u0E40\u0E21\u0E19\u0E15\u0E4C\u0E22\u0E32\u0E27",
       inputSchema: { key: external_exports.string().describe("\u0E23\u0E2B\u0E31\u0E2A\u0E07\u0E32\u0E19"), format: FORMAT, ...PAGE_ARGS },
       annotations: READ
     },
@@ -22365,7 +22384,87 @@ ${describeAttachments(list.data)}`
       return ok(blocks);
     }
   });
+  defs.push({
+    name: "list_pull_requests",
+    config: {
+      title: "\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23 PR \u0E17\u0E35\u0E48\u0E1C\u0E39\u0E01\u0E01\u0E31\u0E1A\u0E07\u0E32\u0E19",
+      description: "PR \u0E02\u0E2D\u0E07 GitHub \u0E17\u0E35\u0E48\u0E16\u0E39\u0E01\u0E1C\u0E39\u0E01\u0E01\u0E31\u0E1A\u0E07\u0E32\u0E19\u0E43\u0E1A\u0E19\u0E35\u0E49 (\u0E41\u0E2A\u0E14\u0E07\u0E43\u0E19\u0E41\u0E16\u0E1A\u0E02\u0E49\u0E32\u0E07\u0E02\u0E2D\u0E07\u0E2B\u0E19\u0E49\u0E32\u0E07\u0E32\u0E19\u0E14\u0E49\u0E27\u0E22) \u0E40\u0E23\u0E35\u0E22\u0E07\u0E43\u0E2B\u0E21\u0E48\u2192\u0E40\u0E01\u0E48\u0E32 \xB7 \u0E43\u0E0A\u0E49\u0E40\u0E0A\u0E47\u0E04\u0E01\u0E48\u0E2D\u0E19 link_pull_request \u0E27\u0E48\u0E32 PR \u0E16\u0E39\u0E01\u0E1C\u0E39\u0E01\u0E44\u0E1B\u0E41\u0E25\u0E49\u0E27\u0E2B\u0E23\u0E37\u0E2D\u0E22\u0E31\u0E07 \xB7 \u0E17\u0E35\u0E48\u0E21\u0E32:github = \u0E23\u0E30\u0E1A\u0E1A sync \u0E08\u0E32\u0E01 GitHub App \u0E40\u0E1B\u0E47\u0E19\u0E04\u0E19\u0E1C\u0E39\u0E01\u0E41\u0E16\u0E27\u0E19\u0E35\u0E49\u0E04\u0E23\u0E31\u0E49\u0E07\u0E41\u0E23\u0E01 \xB7 \u0E17\u0E35\u0E48\u0E21\u0E32:api = \u0E1C\u0E39\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07\u0E41\u0E23\u0E01\u0E1C\u0E48\u0E32\u0E19 tool \u0E19\u0E35\u0E49/REST (\u0E41\u0E16\u0E27 api \u0E01\u0E47\u0E22\u0E31\u0E07\u0E16\u0E39\u0E01 sync \u0E2D\u0E31\u0E1B\u0E40\u0E14\u0E15 status \u0E43\u0E2B\u0E49\u0E41\u0E25\u0E30\u0E40\u0E15\u0E34\u0E21 mergedBy \u0E16\u0E49\u0E32\u0E27\u0E48\u0E32\u0E07 \u2014 \u0E04\u0E48\u0E32\u0E19\u0E35\u0E49\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E1A\u0E2D\u0E01\u0E27\u0E48\u0E32\u0E42\u0E1B\u0E23\u0E40\u0E08\u0E01\u0E15\u0E4C\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21 GitHub App \u0E41\u0E25\u0E49\u0E27\u0E2B\u0E23\u0E37\u0E2D\u0E22\u0E31\u0E07)",
+      inputSchema: { key: external_exports.string().describe("\u0E23\u0E2B\u0E31\u0E2A\u0E07\u0E32\u0E19 \u2014 \u0E43\u0E0A\u0E49\u0E44\u0E14\u0E49\u0E17\u0E31\u0E49\u0E07\u0E07\u0E32\u0E19\u0E2B\u0E25\u0E31\u0E01\u0E41\u0E25\u0E30 subtask (\u0E40\u0E0A\u0E48\u0E19 ART-42)"), format: FORMAT },
+      annotations: READ
+    },
+    handler: async (args) => {
+      const key = str(args.key);
+      if (key === void 0) return fail("\u0E15\u0E49\u0E2D\u0E07\u0E23\u0E30\u0E1A\u0E38 key \u0E02\u0E2D\u0E07\u0E07\u0E32\u0E19 \u0E40\u0E0A\u0E48\u0E19 ART-42");
+      const res = await client.get(
+        `/api/v1/tickets/${encodeURIComponent(key)}/pull-requests`
+      );
+      if (!res.ok) return failFrom(ctx, res.err, `ticket ${key}`);
+      if (str(args.format) === "json") return ok(asJson(res.data));
+      if (res.data.length === 0) return ok(`${key} \u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E21\u0E35 PR \u0E17\u0E35\u0E48\u0E1C\u0E39\u0E01\u0E44\u0E27\u0E49`);
+      return ok(res.data.map(pullRequestLine).join("\n"));
+    }
+  });
+  defs.push({
+    name: "link_pull_request",
+    config: {
+      title: "\u0E1C\u0E39\u0E01/\u0E2D\u0E31\u0E1B\u0E40\u0E14\u0E15 PR \u0E02\u0E2D\u0E07\u0E07\u0E32\u0E19",
+      description: "upsert \u0E14\u0E49\u0E27\u0E22\u0E04\u0E35\u0E22\u0E4C (\u0E07\u0E32\u0E19, url) \u2014 \u0E40\u0E23\u0E35\u0E22\u0E01\u0E0B\u0E49\u0E33\u0E14\u0E49\u0E27\u0E22 url \u0E40\u0E14\u0E34\u0E21\u0E08\u0E30\u0E41\u0E01\u0E49\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E40\u0E14\u0E34\u0E21 \u0E44\u0E21\u0E48\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E0B\u0E49\u0E33 \xB7 field \u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E2A\u0E48\u0E07 = \u0E04\u0E07\u0E04\u0E48\u0E32\u0E40\u0E14\u0E34\u0E21 \u0E08\u0E36\u0E07\u0E40\u0E23\u0E35\u0E22\u0E01\u0E15\u0E2D\u0E19 merge \u0E14\u0E49\u0E27\u0E22\u0E41\u0E04\u0E48 status/mergedBy/environment \u0E44\u0E14\u0E49\n\u26A0\uFE0F \u0E43\u0E2B\u0E49\u0E2D\u0E48\u0E32\u0E19\u0E04\u0E48\u0E32\u0E08\u0E23\u0E34\u0E07\u0E08\u0E32\u0E01 GitHub \u0E40\u0E2A\u0E21\u0E2D \u0E2D\u0E22\u0E48\u0E32\u0E40\u0E14\u0E32: `gh pr view <url> --json title,state,author,mergedBy,baseRefName,createdAt,mergedAt`\nenvironment = \u0E1B\u0E25\u0E32\u0E22\u0E17\u0E32\u0E07 deploy \u0E17\u0E35\u0E48\u0E1C\u0E39\u0E49\u0E40\u0E23\u0E35\u0E22\u0E01\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28\u0E40\u0E2D\u0E07 (\u0E40\u0E0A\u0E48\u0E19 PROD, UAT) \u2014 \u0E23\u0E30\u0E1A\u0E1A\u0E44\u0E21\u0E48\u0E40\u0E14\u0E32\u0E08\u0E32\u0E01\u0E0A\u0E37\u0E48\u0E2D branch \xB7 \u0E1C\u0E39\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07\u0E41\u0E23\u0E01\u0E15\u0E49\u0E2D\u0E07\u0E21\u0E35 openedBy \xB7 PR \u0E40\u0E14\u0E35\u0E22\u0E27\u0E1C\u0E39\u0E01\u0E44\u0E14\u0E49\u0E2B\u0E25\u0E32\u0E22\u0E07\u0E32\u0E19 (\u0E40\u0E23\u0E35\u0E22\u0E01\u0E0B\u0E49\u0E33\u0E01\u0E31\u0E1A\u0E41\u0E15\u0E48\u0E25\u0E30\u0E07\u0E32\u0E19)\n\u0E1C\u0E39\u0E01\u0E40\u0E02\u0E49\u0E32 subtask \u0E44\u0E14\u0E49\u0E14\u0E49\u0E27\u0E22 key \u0E02\u0E2D\u0E07 subtask \u0E40\u0E2D\u0E07 \u2014 \u0E1B\u0E49\u0E32\u0E22 PR \u0E08\u0E30\u0E42\u0E1C\u0E25\u0E48\u0E1A\u0E19\u0E41\u0E16\u0E27 subtask \u0E43\u0E19\u0E2B\u0E19\u0E49\u0E32\u0E07\u0E32\u0E19\u0E41\u0E21\u0E48\u0E14\u0E49\u0E27\u0E22\n\u0E42\u0E1B\u0E23\u0E40\u0E08\u0E01\u0E15\u0E4C\u0E17\u0E35\u0E48\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21 GitHub App \u0E41\u0E25\u0E49\u0E27 \u0E23\u0E30\u0E1A\u0E1A sync PR \u0E40\u0E2D\u0E07\u0E17\u0E38\u0E01 15 \u0E19\u0E32\u0E17\u0E35 (title/status \u0E15\u0E32\u0E21 GitHub \xB7 mergedBy \u0E40\u0E15\u0E34\u0E21\u0E43\u0E2B\u0E49\u0E40\u0E09\u0E1E\u0E32\u0E30\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E22\u0E31\u0E07\u0E27\u0E48\u0E32\u0E07) \u0E41\u0E15\u0E48\u0E43\u0E2B\u0E49\u0E40\u0E23\u0E35\u0E22\u0E01 tool \u0E19\u0E35\u0E49\u0E17\u0E31\u0E19\u0E17\u0E35\u0E17\u0E35\u0E48\u0E40\u0E1B\u0E34\u0E14 PR \u0E2D\u0E22\u0E39\u0E48\u0E14\u0E35\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E42\u0E1C\u0E25\u0E48\u0E17\u0E31\u0E19\u0E17\u0E35 \u0E41\u0E25\u0E30 repo \u0E17\u0E35\u0E48\u0E42\u0E1B\u0E23\u0E40\u0E08\u0E01\u0E15\u0E4C\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E15\u0E34\u0E14\u0E15\u0E32\u0E21\u0E15\u0E49\u0E2D\u0E07\u0E1C\u0E39\u0E01\u0E40\u0E2D\u0E07\u0E40\u0E17\u0E48\u0E32\u0E19\u0E31\u0E49\u0E19 \xB7 \u0E04\u0E48\u0E32 `environment` \u0E17\u0E35\u0E48\u0E2A\u0E48\u0E07\u0E08\u0E30\u0E16\u0E39\u0E01\u0E15\u0E32\u0E23\u0E32\u0E07 branch\u2192ENV \u0E02\u0E2D\u0E07\u0E42\u0E1B\u0E23\u0E40\u0E08\u0E01\u0E15\u0E4C\u0E17\u0E31\u0E1A\u0E40\u0E21\u0E37\u0E48\u0E2D base branch \u0E2D\u0E22\u0E39\u0E48\u0E43\u0E19\u0E15\u0E32\u0E23\u0E32\u0E07 (\u0E44\u0E21\u0E48\u0E2D\u0E22\u0E39\u0E48 = \u0E04\u0E07\u0E04\u0E48\u0E32\u0E17\u0E35\u0E48\u0E2A\u0E48\u0E07)",
+      inputSchema: {
+        key: external_exports.string().describe("\u0E23\u0E2B\u0E31\u0E2A\u0E07\u0E32\u0E19 \u2014 \u0E43\u0E0A\u0E49\u0E44\u0E14\u0E49\u0E17\u0E31\u0E49\u0E07\u0E07\u0E32\u0E19\u0E2B\u0E25\u0E31\u0E01\u0E41\u0E25\u0E30 subtask (\u0E40\u0E0A\u0E48\u0E19 ART-42) \xB7 PR \u0E1C\u0E39\u0E01\u0E01\u0E31\u0E1A key \u0E17\u0E35\u0E48\u0E23\u0E30\u0E1A\u0E38\u0E15\u0E23\u0E07 \u0E46"),
+        url: external_exports.string().describe("\u0E25\u0E34\u0E07\u0E01\u0E4C PR \u0E02\u0E2D\u0E07 GitHub \u0E40\u0E0A\u0E48\u0E19 https://github.com/owner/repo/pull/218"),
+        title: external_exports.string().optional().describe("\u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D PR (\u0E08\u0E32\u0E01 gh pr view)"),
+        status: external_exports.enum(["open", "merged", "closed"]).optional().describe("\u0E44\u0E21\u0E48\u0E2A\u0E48\u0E07 = open \u0E15\u0E2D\u0E19\u0E1C\u0E39\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07\u0E41\u0E23\u0E01"),
+        openedBy: external_exports.string().optional().describe("GitHub username \u0E04\u0E19\u0E40\u0E1B\u0E34\u0E14 (\u0E1A\u0E31\u0E07\u0E04\u0E31\u0E1A\u0E15\u0E2D\u0E19\u0E1C\u0E39\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07\u0E41\u0E23\u0E01)"),
+        mergedBy: external_exports.string().optional().describe("GitHub username \u0E04\u0E19\u0E01\u0E14 merge"),
+        targetBranch: external_exports.string().optional().describe("base branch \u0E1B\u0E25\u0E32\u0E22\u0E17\u0E32\u0E07 \u0E40\u0E0A\u0E48\u0E19 DEV"),
+        environment: external_exports.string().optional().describe("\u0E1B\u0E25\u0E32\u0E22\u0E17\u0E32\u0E07 deploy \u0E17\u0E35\u0E48\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28\u0E40\u0E2D\u0E07 \u0E40\u0E0A\u0E48\u0E19 PROD, UAT"),
+        openedAt: external_exports.string().optional().describe("\u0E40\u0E27\u0E25\u0E32\u0E40\u0E1B\u0E34\u0E14 PR \u0E41\u0E1A\u0E1A ISO 8601 (\u0E04\u0E48\u0E32 createdAt \u0E08\u0E32\u0E01 gh)"),
+        mergedAt: external_exports.string().optional().describe("\u0E40\u0E27\u0E25\u0E32 merge \u0E41\u0E1A\u0E1A ISO 8601 (\u0E04\u0E48\u0E32 mergedAt \u0E08\u0E32\u0E01 gh)")
+      },
+      annotations: IDEMPOTENT
+    },
+    handler: async (args) => {
+      const key = str(args.key);
+      const url = str(args.url);
+      if (key === void 0) return fail("\u0E15\u0E49\u0E2D\u0E07\u0E23\u0E30\u0E1A\u0E38 key \u0E02\u0E2D\u0E07\u0E07\u0E32\u0E19 \u0E40\u0E0A\u0E48\u0E19 ART-42");
+      if (url === void 0) return fail("\u0E15\u0E49\u0E2D\u0E07\u0E23\u0E30\u0E1A\u0E38 url \u0E02\u0E2D\u0E07 PR \u0E40\u0E0A\u0E48\u0E19 https://github.com/owner/repo/pull/218");
+      const body = { url };
+      for (const name of [
+        "title",
+        "status",
+        "openedBy",
+        "mergedBy",
+        "targetBranch",
+        "environment",
+        "openedAt",
+        "mergedAt"
+      ]) {
+        const value = str(args[name]);
+        if (value !== void 0) body[name] = value;
+      }
+      const res = await client.put(
+        `/api/v1/tickets/${encodeURIComponent(key)}/pull-requests`,
+        body
+      );
+      if (!res.ok) return failFrom(ctx, res.err, `ticket ${key}`);
+      return ok(`\u0E1C\u0E39\u0E01 PR \u0E40\u0E02\u0E49\u0E32 ${key} \u0E41\u0E25\u0E49\u0E27:
+${pullRequestLine(res.data.pullRequest)}`);
+    }
+  });
   return defs;
+}
+function pullRequestLine(pr) {
+  const bits = [
+    `[${pr.status}]`,
+    `${pr.repo}#${pr.number}`,
+    ...pr.title === null ? [] : [pr.title],
+    ...pr.targetBranch === null ? [] : [`\u2192${pr.targetBranch}`],
+    ...pr.environment === null ? [] : [`ENV:${pr.environment}`],
+    `\u0E40\u0E1B\u0E34\u0E14:${pr.openedBy}`,
+    ...pr.mergedBy === null ? [] : [`merge:${pr.mergedBy}`],
+    `\u0E17\u0E35\u0E48\u0E21\u0E32:${pr.source === "github" ? "github" : "api"}`
+  ];
+  return `${bits.join("  ")} \xB7 ${pr.url}`;
 }
 async function uploadAttachment(ctx, args) {
   const { client, cfg, fs } = ctx;
@@ -22379,13 +22478,28 @@ async function uploadAttachment(ctx, args) {
   if (ticketKey === void 0) return fail("\u0E15\u0E49\u0E2D\u0E07\u0E23\u0E30\u0E1A\u0E38 ticketKey \u0E40\u0E0A\u0E48\u0E19 ART-42");
   if (filePath === void 0) return fail("\u0E15\u0E49\u0E2D\u0E07\u0E23\u0E30\u0E1A\u0E38 filePath (path \u0E02\u0E2D\u0E07\u0E44\u0E1F\u0E25\u0E4C\u0E43\u0E19\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07)");
   const abs = fs.resolve(filePath, cfg.uploadRoot);
+  let real = abs;
   if (cfg.uploadRoot !== void 0) {
     const root = fs.resolve(cfg.uploadRoot);
-    if (abs !== root && !abs.startsWith(root.endsWith("/") ? root : `${root}/`)) {
-      return fail(`\u0E44\u0E1F\u0E25\u0E4C ${abs} \u0E2D\u0E22\u0E39\u0E48\u0E19\u0E2D\u0E01\u0E42\u0E1F\u0E25\u0E40\u0E14\u0E2D\u0E23\u0E4C\u0E17\u0E35\u0E48\u0E2D\u0E19\u0E38\u0E0D\u0E32\u0E15\u0E43\u0E2B\u0E49\u0E2D\u0E31\u0E1B\u0E42\u0E2B\u0E25\u0E14 (ARTEMIS_UPLOAD_ROOT = ${root})`);
+    let realRoot;
+    try {
+      realRoot = await fs.realpath(root);
+    } catch {
+      return fail(`ARTEMIS_UPLOAD_ROOT \u0E0A\u0E35\u0E49\u0E44\u0E1B\u0E42\u0E1F\u0E25\u0E40\u0E14\u0E2D\u0E23\u0E4C\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E21\u0E35\u0E2D\u0E22\u0E39\u0E48\u0E08\u0E23\u0E34\u0E07: ${root} \u2014 \u0E41\u0E01\u0E49\u0E04\u0E48\u0E32\u0E43\u0E19 config \u0E41\u0E25\u0E49\u0E27 restart MCP server`);
+    }
+    try {
+      real = await fs.realpath(abs);
+    } catch (e) {
+      const code = e.code;
+      if (code === "ENOENT") return fail(`\u0E44\u0E21\u0E48\u0E1E\u0E1A\u0E44\u0E1F\u0E25\u0E4C: ${abs}`);
+      return fail(`\u0E40\u0E1B\u0E34\u0E14\u0E44\u0E1F\u0E25\u0E4C ${abs} \u0E44\u0E21\u0E48\u0E44\u0E14\u0E49: ${e instanceof Error ? e.message : String(e)}`);
+    }
+    if (!fs.isInside(realRoot, real)) {
+      const via = real !== abs ? ` \xB7 \u0E1B\u0E25\u0E32\u0E22\u0E17\u0E32\u0E07\u0E08\u0E23\u0E34\u0E07\u0E02\u0E2D\u0E07 symlink: ${real}` : "";
+      return fail(`\u0E44\u0E1F\u0E25\u0E4C ${abs} \u0E2D\u0E22\u0E39\u0E48\u0E19\u0E2D\u0E01\u0E42\u0E1F\u0E25\u0E40\u0E14\u0E2D\u0E23\u0E4C\u0E17\u0E35\u0E48\u0E2D\u0E19\u0E38\u0E0D\u0E32\u0E15\u0E43\u0E2B\u0E49\u0E2D\u0E31\u0E1B\u0E42\u0E2B\u0E25\u0E14 (ARTEMIS_UPLOAD_ROOT = ${root}${via})`);
     }
   }
-  if (looksSecret(abs)) {
+  if (looksSecret(abs) || looksSecret(real)) {
     return fail(
       `\u0E1B\u0E0F\u0E34\u0E40\u0E2A\u0E18\u0E01\u0E32\u0E23\u0E2D\u0E31\u0E1B\u0E42\u0E2B\u0E25\u0E14 ${abs} \u0E40\u0E1E\u0E23\u0E32\u0E30\u0E44\u0E1F\u0E25\u0E4C\u0E19\u0E35\u0E49\u0E40\u0E02\u0E49\u0E32\u0E02\u0E48\u0E32\u0E22 "\u0E44\u0E1F\u0E25\u0E4C\u0E04\u0E27\u0E32\u0E21\u0E25\u0E31\u0E1A" (\u0E40\u0E0A\u0E48\u0E19 .env, \u0E01\u0E38\u0E0D\u0E41\u0E08\u0E2A\u0E48\u0E27\u0E19\u0E15\u0E31\u0E27, credential \u0E02\u0E2D\u0E07 cloud) \xB7 \u0E01\u0E32\u0E23\u0E41\u0E19\u0E1A\u0E44\u0E1F\u0E25\u0E4C\u0E04\u0E37\u0E2D\u0E01\u0E32\u0E23\u0E2A\u0E48\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2D\u0E2D\u0E01\u0E19\u0E2D\u0E01\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E41\u0E1A\u0E1A\u0E22\u0E49\u0E2D\u0E19\u0E01\u0E25\u0E31\u0E1A\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49 \xB7 \u0E16\u0E49\u0E32\u0E15\u0E31\u0E49\u0E07\u0E43\u0E08\u0E08\u0E23\u0E34\u0E07 \u0E43\u0E2B\u0E49\u0E04\u0E31\u0E14\u0E25\u0E2D\u0E01\u0E40\u0E09\u0E1E\u0E32\u0E30\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E44\u0E1B\u0E44\u0E27\u0E49\u0E44\u0E1F\u0E25\u0E4C\u0E2D\u0E37\u0E48\u0E19\u0E01\u0E48\u0E2D\u0E19`
     );
@@ -22487,7 +22601,7 @@ function configErrorTools(names, message) {
 }
 
 // src/stdio.ts
-var VERSION = "0.1.0";
+var VERSION = "0.3.1";
 function logStderr(level, cfgLevel, message) {
   if (cfgLevel === "silent") return;
   if (level === "debug" && cfgLevel !== "debug") return;
@@ -22508,7 +22622,12 @@ var nodeFs = {
   },
   basename(p) {
     return basename(p);
-  }
+  },
+  realpath(p) {
+    return realpath(p);
+  },
+  // node:path ของแพลตฟอร์มนี้ (win32 หรือ posix) — ตรรกะอยู่ใน fsGuard.ts ซึ่งเทสต์ทั้งสองแบบ
+  isInside: makeIsInside(path)
 };
 async function main() {
   const loaded = loadConfig(process.env);
@@ -22548,4 +22667,217 @@ main().catch((e) => {
   );
   process.exit(1);
 });
+
+/*
+=== ใบอนุญาตของแพ็กเกจที่ถูกรวมอยู่ในไฟล์นี้ (bundled third-party licenses) ===
+
+@modelcontextprotocol/sdk@1.29.0 — MIT
+
+MIT License
+
+Copyright (c) 2024 Anthropic, PBC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+------------------------------------------------------------------------
+
+ajv@8.20.0 — MIT
+
+The MIT License (MIT)
+
+Copyright (c) 2015-2021 Evgeny Poberezkin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+------------------------------------------------------------------------
+
+ajv-formats@3.0.1 — MIT
+
+MIT License
+
+Copyright (c) 2020 Evgeny Poberezkin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+------------------------------------------------------------------------
+
+fast-deep-equal@3.1.3 — MIT
+
+MIT License
+
+Copyright (c) 2017 Evgeny Poberezkin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+------------------------------------------------------------------------
+
+fast-uri@3.1.3 — BSD-3-Clause
+
+Copyright (c) 2011-2021, Gary Court until https://github.com/garycourt/uri-js/commit/a1acf730b4bba3f1097c9f52e7d9d3aba8cdcaae
+Copyright (c) 2021-present The Fastify team <https://github.com/fastify/fastify#team>
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * The names of any contributors may not be used to endorse or promote
+      products derived from this software without specific prior written
+      permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS AND CONTRIBUTORS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+                                  *   *   *
+
+The complete list of contributors can be found at:
+- https://github.com/garycourt/uri-js/graphs/contributors
+
+------------------------------------------------------------------------
+
+json-schema-traverse@1.0.0 — MIT
+
+MIT License
+
+Copyright (c) 2017 Evgeny Poberezkin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+------------------------------------------------------------------------
+
+zod@3.25.76 — MIT
+
+MIT License
+
+Copyright (c) 2025 Colin McDonnell
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+------------------------------------------------------------------------
+
+zod-to-json-schema@3.25.2 — ISC
+
+ISC License
+
+Copyright (c) 2020, Stefan Terdell
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+*/
 //# sourceMappingURL=artemis-mcp.mjs.map

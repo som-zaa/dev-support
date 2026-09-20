@@ -55,6 +55,10 @@ done < <(find "$tables_root" -maxdepth 1 -type f -name '*.d2' -print | LC_ALL=C 
 while IFS= read -r feature_file; do
   [[ -n "$feature_file" ]] || continue
   feature_name="$(basename "$feature_file" .d2)"
+  if [[ ! "$feature_name" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+    echo "Invalid Feature filename: $feature_file (use lower-case hyphen-case)" >&2
+    exit 1
+  fi
   printf '...@features/%s\n' "$feature_name" >> "$tmp_entrypoint"
 done < <(find "$features_root" -maxdepth 1 -type f -name '*.d2' -print | LC_ALL=C sort)
 

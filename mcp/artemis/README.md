@@ -1,11 +1,17 @@
 # artemis — MCP server (bundle)
 
-MCP server ที่ห่อ REST API `/api/v1` ของ Artemis ให้ AI Agent (Claude Code/Codex) อ่าน/เขียนงานได้ **21 tool**
-(โปรเจกต์ · บอร์ด · งาน · sprint · backlog · คอมเมนต์ · label · ไฟล์แนบ)
+MCP server ที่ห่อ REST API `/api/v1` ของ Artemis ให้ AI Agent (Claude Code/Codex) อ่าน/เขียนงานได้ **23 tool**
+(โปรเจกต์ · บอร์ด · งาน · sprint · backlog · คอมเมนต์ · label · ไฟล์แนบ · pull request)
 
 - `artemis-mcp.mjs` = **bundle ไฟล์เดียว** (esbuild รวม SDK + zod เข้าไปแล้ว) รันด้วย `node` ได้เลย
   ไม่ต้องมี `node_modules` หรือ repo artemis
 - ต้นทาง/คู่มือเต็ม: `tools/artemis-mcp/` ใน repo `dobybot/artemis`
+
+> **ทางหลักของผู้ใช้ทั่วไปตอนนี้คือหน้าเว็บ** (ART-151/154, Sep 2026): เข้า Artemis → เมนูบัญชี →
+> **MCP Server** (`/settings/mcp`) กดดาวน์โหลด `artemis-mcp-<version>.mjs` (หน้าเทียบ SHA-256 ให้ก่อนบันทึก)
+> พร้อม snippet ตั้งค่าสำเร็จรูป — เวอร์ชันตรงกับที่ deploy อยู่เสมอ ไม่ต้อง `git pull` dev-support ·
+> **สำเนาในนี้ + flow refresh ด้านล่างเก็บไว้สำหรับ maintainer ที่แก้โค้ด tool เองแล้วอยากทดสอบ bundle
+> ก่อน merge** (หรือเครื่องที่ตั้ง MCP แบบ global ผ่าน `install-mcp.sh` ไว้ก่อนหน้า)
 
 ## ติดตั้ง
 
@@ -23,9 +29,9 @@ MCP server ที่ห่อ REST API `/api/v1` ของ Artemis ให้ AI 
 
 | ฟิลด์ | ค่า |
 |---|---|
-| `@artemis/mcp` version | `0.1.0` |
-| build จาก artemis commit | `0a3b52e` — feat(mcp): เพิ่มแพ็กเกจ artemis-mcp |
-| อัปเดต bundle เมื่อ | 2026-07-22 |
+| `@artemis/mcp` version | `0.3.1` |
+| build จาก artemis commit | `1dd7bf5` — feat(art-153): Phase 1 — bundle MCP server เข้า image + GET /api/mcp/download ที่ต้องล็อกอิน (ART-151) (#251) · รวม 0.3.1 จาก `b8e1662` (#253) — ต่อจาก 0.3.0 (DEV@68b1363) (ปลาย `DEV`) |
+| อัปเดต bundle เมื่อ | 2026-09-10 |
 
 ## refresh bundle (สำหรับ maintainer)
 
